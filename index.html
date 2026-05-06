@@ -57,7 +57,7 @@ header {
     height: 28px;
 }
 
-nav a {
+.desktop-nav a {
     margin: 0 10px;
     text-decoration: none;
     color: var(--muted);
@@ -71,6 +71,27 @@ nav a {
     border-radius: 20px;
     text-decoration: none;
     font-size: 13px;
+}
+
+/* MOBILE MENU */
+.menu-toggle {
+    display: none;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.mobile-menu {
+    display: none;
+    flex-direction: column;
+    background: white;
+    border-bottom: 1px solid var(--border);
+}
+
+.mobile-menu a {
+    padding: 15px;
+    text-decoration: none;
+    color: var(--text);
+    border-top: 1px solid var(--border);
 }
 
 /* HERO */
@@ -215,7 +236,7 @@ h2 {
     padding: 13px;
     border-radius: 10px;
     background: var(--primary);
-    color: yellow;
+    color: white;
     font-size: 14px;
     border: none;
     cursor: pointer;
@@ -240,6 +261,41 @@ footer {
     opacity: 1;
     transform: translateY(0);
 }
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+
+    header {
+        padding: 16px 20px;
+    }
+
+    .desktop-nav,
+    .desktop-cta {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    .hero {
+        padding: 80px 20px 40px;
+    }
+
+    .trust {
+        flex-wrap: wrap;
+        gap: 10px;
+        font-size: 12px;
+    }
+
+    .section {
+        padding: 60px 20px;
+    }
+}
 </style>
 </head>
 
@@ -256,14 +312,22 @@ footer {
         Serendipity
     </div>
 
-    <nav>
+    <nav class="desktop-nav">
         <a href="#features">Features</a>
         <a href="#pricing">Pricing</a>
         <a href="#contact">Contact</a>
     </nav>
 
-    <a class="cta-btn" href="#contact">Get Started</a>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+    <a class="cta-btn desktop-cta" href="#contact">Get Started</a>
 </header>
+
+<div id="mobileMenu" class="mobile-menu">
+    <a href="#features" onclick="toggleMenu()">Features</a>
+    <a href="#pricing" onclick="toggleMenu()">Pricing</a>
+    <a href="#contact" onclick="toggleMenu()">Contact</a>
+</div>
 
 <section class="hero fade-in">
     <h1>Connectivity & Payments for Modern Businesses</h1>
@@ -350,7 +414,7 @@ const obs = new IntersectionObserver(entries => {
 });
 document.querySelectorAll(".fade-in").forEach(el => obs.observe(el));
 
-/* smooth scroll fix */
+/* smooth scroll */
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener("click", function(e) {
         e.preventDefault();
@@ -358,6 +422,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             .scrollIntoView({ behavior: "smooth" });
     });
 });
+
+/* mobile menu */
+function toggleMenu() {
+    const menu = document.getElementById("mobileMenu");
+    menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+}
 </script>
 
 </body>
