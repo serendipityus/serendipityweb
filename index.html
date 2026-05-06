@@ -40,11 +40,28 @@ header {
     padding: 18px 40px;
     background: white;
     border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
-.logo {
+.logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     font-weight: 600;
-    font-size: 18px;
+}
+
+.logo svg {
+    width: 28px;
+    height: 28px;
+}
+
+nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 14px;
 }
 
 .cta-btn {
@@ -59,26 +76,52 @@ header {
 /* HERO */
 .hero {
     text-align: center;
-    padding: 100px 20px 60px;
+    padding: 110px 20px 70px;
     max-width: 900px;
     margin: auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 30%, rgba(0,0,0,0.06), transparent 40%),
+                radial-gradient(circle at 70% 70%, rgba(0,0,0,0.04), transparent 45%);
+    animation: floatBg 12s ease-in-out infinite;
+    z-index: 0;
+}
+
+@keyframes floatBg {
+    0% { transform: translate(0px, 0px); }
+    50% { transform: translate(20px, -20px); }
+    100% { transform: translate(0px, 0px); }
+}
+
+.hero * {
+    position: relative;
+    z-index: 1;
 }
 
 .hero h1 {
-    font-size: 46px;
+    font-size: 52px;
     font-weight: 600;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
     margin-bottom: 18px;
 }
 
 .hero p {
     font-size: 18px;
     color: var(--muted);
-    max-width: 700px;
+    max-width: 720px;
     margin: 0 auto 30px;
 }
 
-.hero .buttons a {
+.buttons a {
     margin: 10px;
     padding: 12px 22px;
     border-radius: 25px;
@@ -86,14 +129,17 @@ header {
     font-size: 14px;
 }
 
-.primary {
-    background: var(--primary);
-    color: white;
-}
+.primary { background: var(--primary); color: white; }
+.secondary { border: 1px solid var(--border); color: var(--text); }
 
-.secondary {
-    border: 1px solid var(--border);
-    color: var(--text);
+/* TRUST */
+.trust {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+    color: var(--muted);
+    font-size: 13px;
 }
 
 /* SECTIONS */
@@ -104,6 +150,11 @@ header {
     margin: auto;
 }
 
+h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
 /* GRID */
 .grid {
     display: grid;
@@ -112,18 +163,18 @@ header {
     margin-top: 40px;
 }
 
-/* CARDS */
+/* CARD */
 .card {
     background: var(--card);
     padding: 28px;
     border-radius: 14px;
     border: 1px solid var(--border);
     box-shadow: 0 1px 0 rgba(0,0,0,0.02);
-    transition: all 0.2s ease;
+    transition: 0.2s ease;
 }
 
 .card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
     box-shadow: var(--shadow);
 }
 
@@ -142,11 +193,7 @@ header {
     flex-direction: column;
     gap: 14px;
     text-align: left;
-}
-
-.form-title {
-    font-size: 18px;
-    font-weight: 600;
+    scroll-margin-top: 100px;
 }
 
 .form-card input,
@@ -157,19 +204,11 @@ header {
     border: 1px solid var(--border);
     font-size: 14px;
     background: #fafafa;
-    transition: 0.2s ease;
 }
 
 .form-card textarea {
     min-height: 110px;
     resize: none;
-}
-
-.form-card input:focus,
-.form-card textarea:focus {
-    border-color: var(--primary);
-    background: #fff;
-    outline: none;
 }
 
 .form-card button {
@@ -178,15 +217,8 @@ header {
     background: var(--primary);
     color: white;
     font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
     border: none;
-    transition: 0.2s ease;
-}
-
-.form-card button:hover {
-    background: #2a2a2a;
-    transform: translateY(-1px);
+    cursor: pointer;
 }
 
 /* FOOTER */
@@ -196,80 +228,137 @@ footer {
     font-size: 13px;
     color: #777;
 }
+
+/* FADE IN */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 0.6s ease;
+}
+
+.fade-in.show {
+    opacity: 1;
+    transform: translateY(0);
+}
 </style>
 </head>
 
 <body>
 
 <header>
-    <div class="logo">Serendipity</div>
-    <a href="#contact" class="cta-btn">Get Started</a>
+    <div class="logo-wrap">
+        <div class="logo">
+            <svg viewBox="0 0 100 100" fill="none">
+                <circle cx="50" cy="50" r="40" stroke="black" stroke-width="6"/>
+                <path d="M30 55 Q50 20 70 55" stroke="black" stroke-width="6" fill="none"/>
+            </svg>
+        </div>
+        Serendipity
+    </div>
+
+    <nav>
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <a class="cta-btn" href="#contact">Get Started</a>
 </header>
 
-<section class="hero">
-    <h1>Connectivity & Payments Built for Modern Businesses</h1>
-    <p>
-        Serendipity provides seamless mobile connectivity and point-of-sale solutions
-        for small businesses — powered by next-generation infrastructure.
-    </p>
+<section class="hero fade-in">
+    <h1>Connectivity & Payments for Modern Businesses</h1>
+    <p>Serendipity helps NYC businesses stay connected and get paid instantly.</p>
 
     <div class="buttons">
-        <a href="#contact" class="primary">Start Now</a>
-        <a href="#learn" class="secondary">Learn More</a>
+        <a class="primary" href="#contact">Get Started</a>
+        <a class="secondary" href="#features">Learn More</a>
     </div>
 </section>
 
-<section class="section" id="learn">
-    <h2>Everything You Need. Nothing You Don’t.</h2>
+<div class="trust fade-in">
+    <div>⚡ Instant Setup</div>
+    <div>📍 NYC Focused</div>
+    <div>💳 Payments Ready</div>
+    <div>📡 eSIM Powered</div>
+</div>
+
+<section class="section" id="features">
+    <h2 class="fade-in">Everything You Need</h2>
 
     <div class="grid">
-        <div class="card">
+        <div class="card fade-in">
             <h3>eSIM Connectivity</h3>
-            <p>Instant mobile service for you and your team — no stores, no delays.</p>
+            <p>Instant mobile service for your team.</p>
         </div>
 
-        <div class="card">
-            <h3>POS Solutions</h3>
-            <p>Accept payments anywhere with simple, modern tools built for speed.</p>
+        <div class="card fade-in">
+            <h3>POS Systems</h3>
+            <p>Accept payments anywhere.</p>
         </div>
 
-        <div class="card">
+        <div class="card fade-in">
             <h3>Boutique Support</h3>
-            <p>Real human support tailored for NYC businesses and growing brands.</p>
+            <p>Human-first NYC support.</p>
         </div>
     </div>
 </section>
 
-<section class="section">
-    <h2>Designed for Small Business Owners</h2>
-    <p style="color: var(--muted); max-width: 700px; margin: 20px auto 0;">
-        From pop-ups to storefronts, Serendipity helps you stay connected, get paid,
-        and scale — without complexity.
-    </p>
+<section class="section" id="pricing">
+    <h2 class="fade-in">Simple Pricing</h2>
+
+    <div class="grid">
+        <div class="card fade-in">
+            <h3>Starter</h3>
+            <p>$29 / month</p>
+        </div>
+
+        <div class="card fade-in">
+            <h3>Growth</h3>
+            <p>$59 / month</p>
+        </div>
+
+        <div class="card fade-in">
+            <h3>Pro</h3>
+            <p>$99 / month</p>
+        </div>
+    </div>
 </section>
 
 <section class="section" id="contact">
-    <h2>Get Started</h2>
-    <p style="color: var(--muted);">Tell us about your business and we’ll set you up.</p>
+    <h2 class="fade-in">Get Started</h2>
 
-    <form action="https://formspree.io/f/mqenbdod" method="POST" class="form-card">
-
-        <div class="form-title">Contact Serendipity</div>
+    <form action="https://formspree.io/f/mqenbdod" method="POST" class="form-card fade-in">
 
         <input type="text" name="name" placeholder="Your Name" required>
-
-        <input type="email" name="email" placeholder="Email Address" required>
-
+        <input type="email" name="email" placeholder="Email" required>
         <textarea name="message" placeholder="Tell us about your business"></textarea>
 
         <button type="submit">Submit</button>
-
     </form>
 </section>
 
 <footer>
-    © 2026 Serendipity. All rights reserved.
+    © 2026 Serendipity
 </footer>
+
+<script>
+/* scroll animations */
+const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add("show");
+    });
+});
+document.querySelectorAll(".fade-in").forEach(el => obs.observe(el));
+
+/* smooth scroll fix */
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener("click", function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute("href"))
+            .scrollIntoView({ behavior: "smooth" });
+    });
+});
+</script>
 
 </body>
 </html>
