@@ -1212,5 +1212,29 @@ form.addEventListener('submit', async function(e){
 });
 
 </script>
+<script>
+
+function applyPromo() {
+
+    const code = document.getElementById('promoInput').value.trim().toUpperCase();
+    const msg = document.getElementById('promoMsg');
+
+    if (code === "UTICA") {
+
+        msg.innerText = "Promo applied! Redirecting...";
+
+        setTimeout(() => {
+            window.location.href = "https://buy.stripe.com/7sY7sL0hC45CgLw78mbQY03";
+        }, 800);
+
+    } else {
+
+        msg.innerText = "Invalid code. Please try again.";
+
+    }
+
+}
+
+</script>
 </body>
 </html>
