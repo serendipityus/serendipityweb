@@ -448,7 +448,19 @@ footer{
     color:#777;
     font-size:14px;
 }
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:30px;
+    margin-left:auto;
+}
 
+.header-buttons{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
 @media(max-width:900px){
 
     header{
@@ -485,8 +497,7 @@ footer{
 <body>
 
 <header>
-    <div class="logo">Serendipity</div>
-
+<div class="header-right">
     <nav>
         <a href="#solutions">Solutions</a>
         <a href="#careers">Careers</a>
@@ -494,11 +505,12 @@ footer{
         <a href="#contact">Contact</a>
     </nav>
 
-    <a href="#positions" class="cta-btn">Join Our Team</a>
-<a href="/SerendipityStudio.html" class="cta-btn">
-    Get Your Business a Webpage
-</a>
-    <a href="#positions" class="cta-btn">Explore Custom Pricing</a>
+    <div class="header-buttons">
+        <a href="#positions" class="cta-btn">Join Our Team</a>
+        <a href="/SerendipityStudio.html" class="cta-btn">Get Your Business a Webpage</a>
+        <a href="#positions" class="cta-btn">Explore Custom Pricing</a>
+    </div>
+</div>
 </header>
 
 <section class="hero">
