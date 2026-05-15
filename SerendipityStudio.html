@@ -1003,8 +1003,51 @@ footer{
         </div>
 
     </div>
+<div style="max-width:600px;margin:40px auto;text-align:center;">
 
+    <h3 style="margin-bottom:10px;">Have a promo code?</h3>
+
+    <p style="color:#666;margin-bottom:15px;">
+        Enter your code to unlock special pricing.
+    </p>
+
+    <input 
+        id="promoInput"
+        type="text"
+        placeholder="Enter promo code"
+        style="
+            width:100%;
+            padding:16px;
+            border-radius:14px;
+            border:1px solid #ddd;
+            font-size:14px;
+            outline:none;
+            margin-bottom:10px;
+            text-align:center;
+        "
+    >
+
+    <button 
+        onclick="applyPromo()"
+        style="
+            width:100%;
+            padding:16px;
+            border:none;
+            border-radius:14px;
+            background:#111;
+            color:white;
+            font-weight:600;
+            cursor:pointer;
+        "
+    >
+        Apply Code
+    </button>
+
+    <p id="promoMsg" style="margin-top:10px;color:#666;font-size:14px;"></p>
+
+</div>
 </section>
+    
 <section class="section" id="contact">
 
     <div class="contact-box">
