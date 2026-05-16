@@ -1076,9 +1076,7 @@ header nav{
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-
-function openPortal(id){
-
+window.openPortal = function(id) {
     console.log("Opening portal:", id);
 
     const portals = document.querySelectorAll('.portal');
@@ -1090,7 +1088,7 @@ function openPortal(id){
 
     const target = document.getElementById(id);
 
-    if(!target){
+    if (!target) {
         console.error("Portal not found:", id);
         return;
     }
@@ -1099,10 +1097,9 @@ function openPortal(id){
     target.style.display = 'block';
 
     setTimeout(() => {
-        target.scrollIntoView({ behavior:'smooth', block:'start' });
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 50);
-}
-
+};
 function closePortals(){
 
     const portals = document.querySelectorAll('.portal');
