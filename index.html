@@ -1077,21 +1077,30 @@ header nav{
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 
-
 function openPortal(id){
+
+    console.log("Opening portal:", id);
 
     const portals = document.querySelectorAll('.portal');
 
-    portals.forEach(portal => {
-        portal.classList.remove('active');
+    portals.forEach(p => {
+        p.classList.remove('active');
+        p.style.display = 'none';
     });
 
-    document.getElementById(id).classList.add('active');
+    const target = document.getElementById(id);
 
-    document.getElementById(id).scrollIntoView({
-        behavior:'smooth'
-    });
+    if(!target){
+        console.error("Portal not found:", id);
+        return;
+    }
 
+    target.classList.add('active');
+    target.style.display = 'block';
+
+    setTimeout(() => {
+        target.scrollIntoView({ behavior:'smooth', block:'start' });
+    }, 50);
 }
 
 function closePortals(){
