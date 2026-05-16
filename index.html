@@ -1077,8 +1077,6 @@ header nav{
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 window.openPortal = function (id) {
-    console.log("Opening portal:", id);
-
     const portals = document.querySelectorAll('.portal');
 
     portals.forEach(p => {
@@ -1088,10 +1086,7 @@ window.openPortal = function (id) {
 
     const target = document.getElementById(id);
 
-    if (!target) {
-        console.error("Portal not found:", id);
-        return;
-    }
+    if (!target) return console.error("Portal not found:", id);
 
     target.classList.add('active');
     target.style.display = 'block';
@@ -1102,302 +1097,93 @@ window.openPortal = function (id) {
 };
 
 window.closePortals = function () {
-    const portals = document.querySelectorAll('.portal');
-
-    portals.forEach(portal => {
-        portal.classList.remove('active');
-        portal.style.display = 'none';
+    document.querySelectorAll('.portal').forEach(p => {
+        p.classList.remove('active');
+        p.style.display = 'none';
     });
 
-    const positions = document.getElementById('positions');
-    if (positions) {
-        positions.scrollIntoView({ behavior: 'smooth' });
-    }
+    document.getElementById('positions')
+        ?.scrollIntoView({ behavior: 'smooth' });
 };
-
-
-const contactForm = document.getElementById('contactForm');
-
-if(contactForm){
-
-    contactForm.addEventListener('submit', async function(e){
-
-        e.preventDefault();
-
-        const button = contactForm.querySelector('.submit-btn');
-
-        const originalText = button.innerText;
-
-        button.disabled = true;
-        button.innerText = 'Submitting...';
-
-        try{
-
-            const response = await fetch(contactForm.action,{
-                method:'POST',
-                body:new FormData(contactForm),
-                headers:{
-                    'Accept':'application/json'
-                }
-            });
-
-            if(response.ok){
-
-                button.innerText = 'Submitted Successfully ✓';
-                button.style.background = '#16a34a';
-                button.style.color = 'white';
-
-                contactForm.reset();
-
-            }else{
-
-                button.innerText = 'Submission Failed';
-                button.style.background = '#dc2626';
-                button.style.color = 'white';
-
-            }
-
-        }catch(error){
-
-            button.innerText = 'Connection Error';
-            button.style.background = '#dc2626';
-            button.style.color = 'white';
-
-        }
-
-        setTimeout(() => {
-
-            button.disabled = false;
-            button.innerText = originalText;
-            button.style.background = '#111';
-            button.style.color = 'white';
-
-        },3000);
-
-    });
-
-}
-);
-
-async function uploadResume(file){
-
-    const fileName =
-      `${Date.now()}-${file.name}`;
-
-    const { data, error } =
-      await supabase.storage
-      .from('Resumes')
-      .upload(fileName, file);
-
-    if(error){
-        console.error(error);
-        throw error;
-    }
-
-    const {
-      data: publicUrlData
-    } = supabase.storage
-      .from('Resumes')
-      .getPublicUrl(fileName);
-
-    return publicUrlData.publicUrl;
-
-}
-
-document
-.getElementById('underwriterForm')
-.addEventListener('submit', async (e) => {
-
-    e.preventDefault();
-
-    const submitBtn =
-      e.target.querySelector('.submit-btn');
-
-    const originalText =
-      submitBtn.innerText;
-
-    submitBtn.disabled = true;
-    submitBtn.innerText = 'Submitting...';
-
-    const file =
-      document.getElementById('uwResume')
-      .files[0];
-
-    if(!file){
-
-        alert('Please upload a resume.');
-
-        submitBtn.disabled = false;
-        submitBtn.innerText = originalText;
-
-        return;
-    }
-
-    try{
-
-        const resumeUrl =
-          await uploadResume(file);
-
-        const { error } =
-          await supabase
-          .from('applications')
-          .insert([{
-
-            full_name:
-              document.getElementById('uwFirstName').value,
-
-            email:
-              document.getElementById('uwEmail').value,
-
-            position:
-              'Commercial Underwriter',
-
-            resume_url:
-              resumeUrl
-
-          }]);
-
-        if(error){
-
-            console.error(error);
-
-            alert('Application failed.');
-
-            submitBtn.disabled = false;
-            submitBtn.innerText = originalText;
-
-            return;
-
-        }
-
-        submitBtn.innerText =
-          'Application Submitted ✓';
-
-        submitBtn.style.background =
-          '#16a34a';
-
-        document
-          .getElementById('underwriterForm')
-          .reset();
-
-    }catch(err){
-
-        console.error(err);
-
-        alert('Upload failed.');
-
-        submitBtn.disabled = false;
-        submitBtn.innerText = originalText;
-
-    }
-
-});
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const supabaseUrl = 'https://mytihyraxpzikhslrilq.supabase.co';
-  const supabaseKey = 'sb_publishable_IeQZAgrEjTl_K5T0ccnWDw_mwvxqTFl';
+    const supabaseUrl = 'https://mytihyraxpzikhslrilq.supabase.co';
+    const supabaseKey = 'sb_publishable_IeQZAgrEjTl_K5T0ccnWDw_mwvxqTFl';
 
-  window.supabaseClient = window.supabase.createClient(
-    supabaseUrl,
-    supabaseKey
-  );
+    window.supabaseClient = window.supabase.createClient(
+        supabaseUrl,
+        supabaseKey
+    );
 
-});
-  // ---------------------------
+    const form = document.getElementById("underwriterForm");
+    if (!form) return;
 
-  // ---------------------------
-  // UPLOAD FUNCTION
-  // ---------------------------
-async function uploadResume(file) {
+    async function uploadResume(file) {
+        const fileName = `${Date.now()}-${file.name}`;
 
-  const supabase = window.supabaseClient;
+        const { error } = await window.supabaseClient
+            .storage
+            .from("Resumes")
+            .upload(fileName, file);
 
-  const fileName = `${Date.now()}-${file.name}`;
+        if (error) throw error;
 
-  const { error } = await supabase
-    .storage
-    .from('Resumes')
-    .upload(fileName, file);
+        const { data } = window.supabaseClient
+            .storage
+            .from("Resumes")
+            .getPublicUrl(fileName);
 
-  if (error) throw error;
-
-  const { data } = supabase
-    .storage
-    .from('Resumes')
-    .getPublicUrl(fileName);
-
-  return data.publicUrl;
-}
-
-  // ---------------------------
-  // FORM HANDLER
-  // ---------------------------
-  const form = document.getElementById("underwriterForm");
-
-  if (!form) {
-    console.error("Underwriter form not found");
-    return;
-  }
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const btn = form.querySelector(".submit-btn");
-    const original = btn.innerText;
-
-    btn.disabled = true;
-    btn.innerText = "Submitting...";
-
-    try {
-      const file = document.getElementById("uwResume").files[0];
-
-      if (!file) {
-        alert("Please upload a resume.");
-        btn.disabled = false;
-        btn.innerText = original;
-        return;
-      }
-
-      // 1. upload resume
-      const resumeUrl = await uploadResume(file);
-
-      // 2. insert row
-      const { error } = await supabase
-        .from("applications")
-        .insert([{
-          full_name: document.getElementById("uwFirstName").value,
-          email: document.getElementById("uwEmail").value,
-          position: "Commercial Underwriter",
-          resume_url: resumeUrl
-        }]);
-
-      if (error) {
-        console.error(error);
-        alert("Database insert failed");
-        throw error;
-      }
-
-      btn.innerText = "Submitted ✓";
-      btn.style.background = "#16a34a";
-
-      form.reset();
-
-    } catch (err) {
-      console.error(err);
-
-      btn.innerText = "Failed";
-      btn.style.background = "#dc2626";
-
-    } finally {
-      setTimeout(() => {
-        btn.disabled = false;
-        btn.innerText = original;
-        btn.style.background = "#111";
-      }, 2500);
+        return data.publicUrl;
     }
-  });
 
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const btn = form.querySelector(".submit-btn");
+        const original = btn.innerText;
+
+        btn.disabled = true;
+        btn.innerText = "Submitting...";
+
+        try {
+            const file = document.getElementById("uwResume").files[0];
+
+            if (!file) {
+                alert("Please upload a resume.");
+                throw new Error("No file");
+            }
+
+            const resumeUrl = await uploadResume(file);
+
+            const { error } = await window.supabaseClient
+                .from("applications")
+                .insert([{
+                    full_name: document.getElementById("uwFirstName").value,
+                    email: document.getElementById("uwEmail").value,
+                    position: "Commercial Underwriter",
+                    resume_url: resumeUrl
+                }]);
+
+            if (error) throw error;
+
+            btn.innerText = "Submitted ✓";
+            btn.style.background = "#16a34a";
+            form.reset();
+
+        } catch (err) {
+            console.error(err);
+            btn.innerText = "Failed";
+            btn.style.background = "#dc2626";
+        }
+
+        setTimeout(() => {
+            btn.disabled = false;
+            btn.innerText = original;
+            btn.style.background = "#111";
+        }, 2500);
+    });
+});
 </script>
 </body>
 </html>
