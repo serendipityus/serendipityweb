@@ -1293,42 +1293,42 @@ document
 
 });
 
-
 document.addEventListener("DOMContentLoaded", () => {
 
-const supabaseUrl = 'https://mytihyraxpzikhslrilq.supabase.co';
-const supabaseKey = 'sb_publishable_IeQZAgrEjTl_K5T0ccnWDw_mwvxqTFl';
+  const supabaseUrl = 'https://mytihyraxpzikhslrilq.supabase.co';
+  const supabaseKey = 'sb_publishable_IeQZAgrEjTl_K5T0ccnWDw_mwvxqTFl';
 
-const supabase = window.supabase.createClient(
-  supabaseUrl,
-  supabaseKey
-)};
+  window.supabaseClient = window.supabase.createClient(
+    supabaseUrl,
+    supabaseKey
+  );
+
+});
   // ---------------------------
 
   // ---------------------------
   // UPLOAD FUNCTION
   // ---------------------------
-  async function uploadResume(file) {
+async function uploadResume(file) {
 
-    const fileName = `${Date.now()}-${file.name}`;
+  const supabase = window.supabaseClient;
 
-    const { data, error } = await supabase
-      .storage
-      .from("Resumes")
-      .upload(fileName, file);
+  const fileName = `${Date.now()}-${file.name}`;
 
-    if (error) {
-      console.error("Upload error:", error);
-      throw error;
-    }
+  const { error } = await supabase
+    .storage
+    .from('Resumes')
+    .upload(fileName, file);
 
-    const { data: urlData } = supabase
-      .storage
-      .from("Resumes")
-      .getPublicUrl(fileName);
+  if (error) throw error;
 
-    return urlData.publicUrl;
-  }
+  const { data } = supabase
+    .storage
+    .from('Resumes')
+    .getPublicUrl(fileName);
+
+  return data.publicUrl;
+}
 
   // ---------------------------
   // FORM HANDLER
