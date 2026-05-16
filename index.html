@@ -537,7 +537,7 @@ header nav{
 </style>
 </head>
 
-<body id="top">>
+<body id="top">
 
 <header>
 <a href="#top" class="logo">
@@ -776,122 +776,38 @@ header nav{
 
         </div>
 
-        <form>
-
-            <div class="form-grid">
-
-                <div class="form-group">
-                    <label>First Name</label>
-                    <input type="text">
-                </div>
-
-                <div class="form-group">
-                    <label>Last Name</label>
-                    <input type="text">
-                </div>
-
-                <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email">
-                </div>
-
-                <div class="form-group">
-                    <label>Years Experience</label>
-                    <select>
-                        <option>0-1 Years</option>
-                        <option>2-4 Years</option>
-                        <option>5-7 Years</option>
-                        <option>8+ Years</option>
-                    </select>
-                </div>
-
-                <div class="form-group full">
-
-                    <label>Resume Upload</label>
-
-                    <div class="upload-box">
-                        <input type="file">
-                        <p>Upload underwriting resume and certifications.</p>
-                    </div>
-
-                </div>
-
-                <div class="form-group full">
-                    <label>Describe Your Underwriting Experience</label>
-                    <textarea></textarea>
-                </div>
-
-            </div>
-
-            <button class="submit-btn">
-                Submit Underwriter Application
-            </button>
-
-            <button type="button" class="back-btn" onclick="closePortals()">
-                ← Back To Positions
-            </button>
-
-        </form>
 <form id="underwriterForm">
 
-<div class="form-grid">
+  <div class="form-grid">
 
-<div class="form-group">
-<label>First Name</label>
+    <div class="form-group">
+      <label>First Name</label>
+      <input type="text" id="uwFirstName" required>
+    </div>
 
-<input
-  type="text"
-  id="uwFirstName"
-  required
->
+    <div class="form-group">
+      <label>Email Address</label>
+      <input type="email" id="uwEmail" required>
+    </div>
 
-</div>
+    <div class="form-group full">
+      <label>Resume Upload</label>
 
-<div class="form-group">
-<label>Email Address</label>
+      <div class="upload-box">
+        <input type="file" id="uwResume" accept=".pdf,.doc,.docx" required>
+        <p>Upload underwriting resume and certifications.</p>
+      </div>
+    </div>
 
-<input
-  type="email"
-  id="uwEmail"
-  required
->
+  </div>
 
-</div>
+  <button type="submit" class="submit-btn">
+    Submit Underwriter Application
+  </button>
 
-<div class="form-group full">
-
-<label>Resume Upload</label>
-
-<div class="upload-box">
-
-<input
-  type="file"
-  id="uwResume"
-  accept=".pdf,.doc,.docx"
-  required
->
-
-<p>
-Upload underwriting resume and certifications.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-<button class="submit-btn">
-Submit Underwriter Application
-</button>
-
-<button
-type="button"
-class="back-btn"
-onclick="closePortals()"
->
-← Back To Positions
-</button>
+  <button type="button" class="back-btn" onclick="closePortals()">
+    ← Back To Positions
+  </button>
 
 </form>
     </div>
