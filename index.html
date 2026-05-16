@@ -1200,7 +1200,7 @@ async function uploadResume(file){
 
     const { data, error } =
       await supabase.storage
-      .from('resumes')
+      .from('Resumes')
       .upload(fileName, file);
 
     if(error){
