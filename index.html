@@ -1189,40 +1189,6 @@ const supabase =
     supabaseKey
 );
 
-function openPortal(id){
-
-    const portals = document.querySelectorAll('.portal');
-
-    portals.forEach(portal => {
-        portal.classList.remove('active');
-    });
-
-    document.getElementById(id).classList.add('active');
-
-    document.getElementById(id).scrollIntoView({
-        behavior:'smooth'
-    });
-
-}
-
-function closePortals(){
-
-    const portals = document.querySelectorAll('.portal');
-
-    portals.forEach(portal => {
-        portal.classList.remove('active');
-    });
-
-    const positions = document.getElementById('positions');
-
-    if(positions){
-        positions.scrollIntoView({
-            behavior:'smooth'
-        });
-    }
-
-}
-
 async function uploadResume(file){
 
     const fileName =
