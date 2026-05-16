@@ -1296,16 +1296,13 @@ document
 
 document.addEventListener("DOMContentLoaded", () => {
 
-const supabaseUrl =
-  'https://mytihyraxpzikhslrilq.supabase.co';
+const supabaseUrl = 'https://mytihyraxpzikhslrilq.supabase.co';
+const supabaseKey = 'sb_publishable_IeQZAgrEjTl_K5T0ccnWDw_mwvxqTFl';
 
-const supabaseKey =
-  'sb_publishable_IeQZAgrEjTl_K5T0ccnWDw_mwvxqTFl';
-
-const supabase =
-  window.supabase.createClient(
-    supabaseUrl,
-    supabaseKey
+const supabase = window.supabase.createClient(
+  supabaseUrl,
+  supabaseKey
+);
   // ---------------------------
 
   // ---------------------------
