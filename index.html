@@ -1303,5 +1303,118 @@ document
 
 });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // ---------------------------
+  // SUPABASE INIT (SAFE)
+  // ---------------------------
+  const supabaseUrl = "https://mytihyraxpzikhslrilq.supabase.co";
+  const supabaseKey = "sb_publishable_IeQZAgrEjTl_K5T0ccnWDw_mwvxqTFl";
+
+  const supabase = window.supabase?.createClient(supabaseUrl, supabaseKey);
+
+  if (!supabase) {
+    console.error("Supabase failed to load");
+    return;
+  }
+
+  // ---------------------------
+  // UPLOAD FUNCTION
+  // ---------------------------
+  async function uploadResume(file) {
+
+    const fileName = `${Date.now()}-${file.name}`;
+
+    const { data, error } = await supabase
+      .storage
+      .from("resumes")
+      .upload(fileName, file);
+
+    if (error) {
+      console.error("Upload error:", error);
+      throw error;
+    }
+
+    const { data: urlData } = supabase
+      .storage
+      .from("resumes")
+      .getPublicUrl(fileName);
+
+    return urlData.publicUrl;
+  }
+
+  // ---------------------------
+  // FORM HANDLER
+  // ---------------------------
+  const form = document.getElementById("underwriterForm");
+
+  if (!form) {
+    console.error("Underwriter form not found");
+    return;
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const btn = form.querySelector(".submit-btn");
+    const original = btn.innerText;
+
+    btn.disabled = true;
+    btn.innerText = "Submitting...";
+
+    try {
+      const file = document.getElementById("uwResume").files[0];
+
+      if (!file) {
+        alert("Please upload a resume.");
+        btn.disabled = false;
+        btn.innerText = original;
+        return;
+      }
+
+      // 1. upload resume
+      const resumeUrl = await uploadResume(file);
+
+      // 2. insert row
+      const { error } = await supabase
+        .from("applications")
+        .insert([{
+          full_name: document.getElementById("uwFirstName").value,
+          email: document.getElementById("uwEmail").value,
+          position: "Commercial Underwriter",
+          resume_url: resumeUrl
+        }]);
+
+      if (error) {
+        console.error(error);
+        alert("Database insert failed");
+        throw error;
+      }
+
+      btn.innerText = "Submitted ✓";
+      btn.style.background = "#16a34a";
+
+      form.reset();
+
+    } catch (err) {
+      console.error(err);
+
+      btn.innerText = "Failed";
+      btn.style.background = "#dc2626";
+
+    } finally {
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.innerText = original;
+        btn.style.background = "#111";
+      }, 2500);
+    }
+  });
+
+});
+</script>
 </body>
 </html>
