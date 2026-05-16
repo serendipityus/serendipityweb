@@ -1,6 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 import formidable from 'formidable';
 import fs from 'fs';
+    const SUPABASE_URL = 'https://mytihyraxpzikhslrilq.supabase.co';
+    const SUPABASE_SERVICE_ROLE_KEY = 'sb_publishable_IeQZAgrEjTl_K5T0ccnWDw_mwvxqTFl';
 
 export const config = {
   api: {
