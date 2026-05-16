@@ -453,7 +453,26 @@ footer{
     width:auto;
     display:block;
 }
+.header-actions{
+    display:flex;
+    gap:12px;
+    align-items:center;
+}
 
+@media(max-width:900px){
+
+    .header-actions{
+        width:100%;
+        flex-wrap:wrap;
+    }
+
+    .header-actions .cta-btn{
+        flex:1;
+        text-align:center;
+        font-size:12px;
+        padding:10px 12px;
+    }
+}
 @media(max-width:900px){
 
     header{
@@ -483,6 +502,21 @@ footer{
     .portal-top{
         flex-direction:column;
     }
+    header{
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+header nav{
+    width:100%;
+}
+
+.cta-btn{
+    flex:1;
+    text-align:center;
+    padding:10px 12px;
+    font-size:12px;
+}
 }
 </style>
 </head>
@@ -501,12 +535,11 @@ footer{
         <a href="#positions">Apply</a>
         <a href="#contact">Contact</a>
     </nav>
-
+<div class="header-actions">
     <a href="#positions" class="cta-btn">Join Our Team</a>
-<a href="/SerendipityStudio.html" class="cta-btn">
-    Get Your Business a Webpage
-</a>
+    <a href="/SerendipityStudio.html" class="cta-btn">Get Your Business a Webpage</a>
     <a href="#contact" class="cta-btn">Explore Custom Pricing</a>
+</div>
 </header>
 
 <section class="hero">
